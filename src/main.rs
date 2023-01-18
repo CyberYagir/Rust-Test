@@ -1,7 +1,9 @@
 mod application;
+mod game;
+
 use application::*;
 
 fn main() {
     let app = Application::create_instance();
-    app.app_update();
+    app.init_game();
 }
