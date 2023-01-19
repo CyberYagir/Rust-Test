@@ -8,7 +8,6 @@ edition = "2021"
 [dependencies]
 bytemuck = "1"
 ogl33 = { version = "0.2.0", features = ["debug_error_checks"]}
-beryllium = "0.2.0-alpha.4"
-imagine = "0.0.5"
+beryllium = "0.3.3"
 serde_json = "1.0.91"
 serde = {version = "1.0.152", features = ["derive"]}

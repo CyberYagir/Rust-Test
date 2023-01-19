@@ -3,6 +3,7 @@ use ogl33::*;
 
 use std::time::Instant;
 
+
 use crate::game_base_class::Game;
 use crate::app_class::cfg_app_class::AppConfig;
 
@@ -23,7 +24,8 @@ pub struct App {
 impl App {
     pub(crate) fn create_instance() -> App {
         let sdl = App::sdl_init();
-        let window = App::sdl_window(&sdl);
+        let cfg = AppConfig::load_data();
+        let window = App::sdl_window(&sdl, &cfg);
 
 
         return App {
@@ -31,7 +33,7 @@ impl App {
             sdl_window: window,
             sdl_game: Game::default(),
 
-            app_config: AppConfig::load_data(),
+            app_config: cfg,
 
             delta_time: 0.0,
             timestamp: Instant::now()
@@ -52,17 +54,19 @@ impl App {
         return sdl;
     }
 
-    fn sdl_window(sdl: &SDL) -> GlWindow {
+    fn sdl_window(sdl: &SDL, cfg: &AppConfig) -> GlWindow {
+        let title = cfg.window_name.as_str();
+        let pos = cfg.window_data.get_gl_state();
+        let size = cfg.window_data.get_size();
         let window = sdl
             .create_gl_window(
-                "Hello Window",
-                WindowPosition::Centered,
-                800,
-                600,
-                WindowFlags::Shown,
+                title,
+                pos,
+                size.x,
+                size.y,
+                beryllium::WindowFlags::Resizable,
             )
             .expect("couldn't make a window and context");
-
         return window;
     }
 
